@@ -1,0 +1,27 @@
+services:
+ sqlserver:
+  image: mcr.microsoft.com/mssql/server:2022-latest
+  container_name: sale_api_database
+  restart: always
+  volumes:
+   - sqlserver_systemdbs:/var/opt/mssql/
+   - sqlserver_userdbs:/var/opt/sqlserver
+   - sqlserver_mssqltools:/var/opt/mssql-tools/bin
+  environment:
+   - MSSQL_SA_PASSWORD=A&VeryComplex123Password
+   - ACCEPT_EULA=Y
+   - MSSQL_PID=Developer
+  ports:
+   - 1433:1433
+
+networks:
+ services_network:
+  driver: bridge
+
+volumes:
+ sqlserver_systemdbs:
+  driver: local
+ sqlserver_userdbs:
+  driver: local
+ sqlserver_mssqltools:
+  driver: local
